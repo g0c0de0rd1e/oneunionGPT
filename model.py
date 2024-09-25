@@ -8,6 +8,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 def generate_marketing_text(product_description):
     try:
         model_name = "sberbank-ai/rugpt3medium_based_on_gpt2"
+        local_model_path = "./models/rugpt3medium_based_on_gpt2"
         prompt = (
             f"Напишите маркетинговое описание для продукта '{product_description}'. "
             f"Акцентируйтесь на его ключевых преимуществах и способности удовлетворить потребности целевой аудитории. "
@@ -16,8 +17,8 @@ def generate_marketing_text(product_description):
             f"Описание: "
         )
 
-        tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-        model = GPT2LMHeadModel.from_pretrained(model_name)
+        tokenizer = GPT2Tokenizer.from_pretrained(model_name, cache_dir=local_model_path)
+        model = GPT2LMHeadModel.from_pretrained(model_name, cache_dir=local_model_path)
         inputs = tokenizer.encode(prompt, return_tensors="pt")
 
         max_generation_length = 500

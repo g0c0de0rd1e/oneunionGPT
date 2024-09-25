@@ -26,13 +26,10 @@ app.add_middleware(
 class ProductDescription(BaseModel):
     description: str
 
-@app.options("/generate/")
-def options():
-    return {}
-
 @app.post("/generate/")
 def generate(product: ProductDescription):
     try:
+        logging.info(f"Received request with description: {product.description}")
         result = generate_marketing_text(product.description)
         return {"result": result}
     except Exception as e:
